@@ -1,0 +1,101 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  background: #1a1a1a;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background: #1a1a1a;
+  color: #ccc;
+}
+
+.tab.active {
+  background: #282828;
+  color: #fff;
+  font-weight: bold;
+}
+
+.panel {
+  display: none;
+  padding: 20px;
+  text-align: center;
+}
+
+.panel.active {
+  display: block;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.wallet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.wallet span {
+  background: #333;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.wallet button {
+  padding: 8px 16px;
+  background: #4caf50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type='text'], input[type='file'] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  color: white;
+  border-radius: 4px;
+}
+
+.actions button {
+  margin: 10px;
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.disclaimer {
+  font-size: 12px;
+  color: #888;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #121212;
+  color: #aaa;
+  margin-top: 30px;
+}
