@@ -1,679 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ArtChain | USDT Donation & AI Art</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #16a34a;
-      --primary-dark: #15803d;
-      --primary-light: #dcfce7;
-      --background: #f8fafc;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      touch-action: manipulation;
-    }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--background);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      max-height: 100vh;
-      max-height: -webkit-fill-available;
-    }
-    
-    /* Header */
-    .header {
-      padding: 0.75rem 1rem;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      flex-shrink: 0;
-    }
-    
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--primary);
-      text-align: center;
-      letter-spacing: -0.5px;
-    }
-    
-    .tagline {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 0.25rem;
-      font-weight: 500;
-    }
-    
-    /* Tabs */
-    .tabs {
-      display: flex;
-      background: var(--surface);
-      position: sticky;
-      top: 60px;
-      z-index: 9;
-      flex-shrink: 0;
-    }
-    
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 0.75rem 0.5rem;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      position: relative;
-      transition: all 0.2s ease;
-      border-bottom: 2px solid transparent;
-    }
-    
-    .tab.active {
-      color: var(--primary-dark);
-      border-bottom: 2px solid var(--primary);
-    }
-    
-    /* Main content */
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 0;
-    }
-    
-    .panel-container {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-      min-height: 0;
-    }
-    
-    .panel {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 1rem;
-      background: var(--surface);
-      display: none;
-    }
-    
-    .panel.active {
-      display: block;
-    }
-    
-    /* Typography */
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 1rem;
-      text-align: center;
-      letter-spacing: -0.25px;
-    }
-    
-    /* Wallet section */
-    .wallet-container {
-      margin-bottom: 1rem;
-    }
-    
-    .wallet-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-muted);
-    }
-    
-    .wallet {
-      background: var(--background);
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      font-size: 0.8125rem;
-      position: relative;
-      border: 1px solid var(--border);
-      font-family: 'Space Grotesk', monospace;
-      word-break: break-all;
-      padding-right: 3rem;
-    }
-    
-    .copy-btn {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.25rem;
-      width: 24px;
-      height: 24px;
-      font-size: 0.6875rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-    
-    .copy-btn.copied {
-      background: var(--primary-dark);
-    }
-    
-    .copy-btn i {
-      font-size: 0.75rem;
-    }
-    
-    /* Canvas */
-    .canvas-container {
-      position: relative;
-      margin-bottom: 1rem;
-    }
-    
-    canvas {
-      width: 100%;
-      height: auto;
-      max-height: 50vh;
-      border-radius: var(--radius-md);
-      background: var(--background);
-      border: 1px solid var(--border);
-      display: block;
-    }
-    
-    /* Forms */
-    .input-group {
-      margin-bottom: 1rem;
-    }
-    
-    label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-muted);
-    }
-    
-    input, textarea {
-      width: 100%;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.875rem;
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: var(--surface);
-    }
-    
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    
-    /* Buttons */
-    .button-group {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .btn {
-      flex: 1;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.875rem;
-      cursor: pointer;
-    }
-    
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    
-    /* Upload area */
-    .upload-container {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      cursor: pointer;
-    }
-    
-    .upload-icon {
-      width: 2rem;
-      height: 2rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-muted);
-    }
-    
-    .upload-text {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
-    }
-    
-    .upload-hint {
-      font-size: 0.6875rem;
-      color: var(--text-muted);
-    }
-    
-    .file-info {
-      display: none;
-      font-size: 0.75rem;
-      color: var(--primary-dark);
-      font-weight: 600;
-      margin-top: 0.5rem;
-    }
-    
-    /* Notes and legal */
-    .note {
-      font-size: 0.75rem;
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 1rem;
-    }
-    
-    .legal {
-      font-size: 0.6875rem;
-      color: var(--text-muted);
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      background: var(--background);
-      border: 1px solid var(--border);
-    }
-    
-    /* Footer */
-    .footer {
-      text-align: center;
-      font-size: 0.6875rem;
-      color: var(--text-muted);
-      padding: 0.75rem;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    
-    .footer a {
-      color: var(--primary-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    /* Success message */
-    .success-message {
-      display: none;
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      padding: 0.75rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 1rem;
-      font-weight: 600;
-      text-align: center;
-    }
-    
-    /* Loading state */
-    .loading {
-      position: relative;
-      pointer-events: none;
-    }
-    
-    .loading::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 1rem;
-      height: 1rem;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    /* Desktop specific styles */
-    @media (min-width: 768px) {
-      body {
-        max-width: 500px;
-        margin: 0 auto;
-        position: relative;
-        border-left: 1px solid var(--border);
-        border-right: 1px solid var(--border);
-      }
-      
-      .header {
-        padding: 1rem;
-      }
-      
-      .logo {
-        font-size: 1.5rem;
-      }
-      
-      .panel {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+    <title>Save JSON</title>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">ArtChain</div>
-    <div class="tagline">Crypto-Powered Generative Art</div>
-  </header>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" data-target="generate">Generate</div>
-    <div class="tab" data-target="rate">Submit</div>
-  </div>
-
-  <!-- Main content -->
-  <main class="main-content">
-    <div class="panel-container">
-      <!-- Generate Panel -->
-      <section id="generate" class="panel active">
-        <h1>Create Unique AI Art</h1>
-        
-        <div class="note">
-          Donate USDT (TRC-20) to receive a one-of-a-kind AI artwork as a thank you gift.
-        </div>
-        
-        <div class="wallet-container">
-          <div class="wallet-label">
-            USDT TRC-20 Wallet Address
-          </div>
-          <div class="wallet">
-            <span id="walletAddress">TCXEbcpqrdsZEYTiXEyzFTU8xg8uVq4nLM</span>
-            <button class="copy-btn" onclick="copyWallet()" title="Copy to clipboard">
-              <i class="far fa-copy"></i>
-            </button>
-          </div>
-        </div>
-        
-        <div class="canvas-container">
-          <canvas id="canvas" width="500" height="300"></canvas>
-        </div>
-        
-        <div class="input-group">
-          <label for="txid">Transaction ID (TXID)</label>
-          <input type="text" id="txid" placeholder="Paste your USDT transaction hash" />
-        </div>
-        
-        <div class="button-group">
-          <button class="btn" onclick="generateArtFromTx()">
-            Generate Art
-          </button>
-          <button class="btn btn-secondary" onclick="downloadArt()" id="downloadBtn" disabled>
-            Download
-          </button>
-        </div>
-        
-        <div class="legal">
-          This is an experimental art project. Donations are voluntary.
-        </div>
-      </section>
-
-      <!-- Rate Panel -->
-      <section id="rate" class="panel">
-        <h1>Submit Your Artwork</h1>
-        
-        <div class="upload-container" id="uploadArea">
-          <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          <div class="upload-text">Drag & drop your artwork here</div>
-          <div class="upload-hint">or click to browse files (PNG or JPG, max 5MB)</div>
-          <input type="file" id="artUpload" accept="image/*" style="display: none;" />
-          <div class="file-info" id="fileInfo"></div>
-        </div>
-        
-        <div class="input-group">
-          <label for="upiAddress">UPI ID (for rewards)</label>
-          <input type="text" id="upiAddress" placeholder="yourname@upi" />
-        </div>
-        
-        <button class="btn" onclick="submitRating()" id="submitBtn" style="margin-bottom: 1rem;">
-          Submit Artwork
-        </button>
-        
-        <div class="success-message" id="successMessage">
-          Thank you for your submission!
-        </div>
-        
-        <div class="legal">
-          By submitting your artwork, you agree to our terms.
-        </div>
-      </section>
+    <h2>Save JSON File on Server</h2>
+    
+    <div>
+        <label>Orders:</label>
+        <input type="text" id="orders" value="1">
     </div>
-  </main>
-
-  <footer class="footer">
-    © 2023 ArtChain | <a href="#">Terms</a> | <a href="#">Privacy</a>
-  </footer>
-
-  <script>
-    // Tab switching
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
-    });
-
-    // Canvas & art generation
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    let currentArtwork = null;
     
-    function seededRandom(seed) {
-      let h = 0;
-      for (let i = 0; i < seed.length; i++) {
-        h = (h << 5) - h + seed.charCodeAt(i);
-        h |= 0;
-      }
-      return function () {
-        h = Math.imul(h ^ (h >>> 15), h | 1);
-        h ^= h + Math.imul(h ^ (h >>> 7), h | 61);
-        return ((h ^ (h >>> 14)) >>> 0) / 4294967296;
-      };
-    }
+    <div>
+        <label>Type:</label>
+        <input type="text" id="type" value="buy">
+    </div>
+    
+    <div>
+        <label>TP:</label>
+        <input type="text" id="tp" value="5454">
+    </div>
+    
+    <div>
+        <label>SL:</label>
+        <input type="text" id="sl" value="73727">
+    </div>
+    
+    <br>
+    <button onclick="saveJSON()">Save JSON File</button>
+    <p id="message"></p>
 
-    function randBetween(min, max, rand) {
-      return rand() * (max - min) + min;
-    }
-
-    function drawTreeSymbol(x, y, scale = 1) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.scale(scale, scale);
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#fff";
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, -30);
-      ctx.moveTo(0, -10);
-      ctx.lineTo(-10, -20);
-      ctx.moveTo(0, -10);
-      ctx.lineTo(10, -20);
-      ctx.moveTo(0, -20);
-      ctx.lineTo(-7, -30);
-      ctx.moveTo(0, -20);
-      ctx.lineTo(7, -30);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    function generateArtFromTx() {
-      const txid = document.getElementById("txid").value.trim();
-      if (!txid || txid.length < 10) return alert("Please enter a valid TXID (min 10 chars)");
-
-      const rand = seededRandom(txid);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      grad.addColorStop(0, `hsl(${randBetween(0, 360, rand)}, 70%, 50%)`);
-      grad.addColorStop(1, `hsl(${randBetween(0, 360, rand)}, 70%, 50%)`);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < 25; i++) {
-        ctx.beginPath();
-        ctx.arc(randBetween(0, canvas.width, rand), randBetween(0, canvas.height, rand), randBetween(30, 90, rand), 0, 2 * Math.PI);
-        ctx.fillStyle = `hsla(${randBetween(0, 360, rand)}, 100%, 70%, ${randBetween(0.3, 0.7, rand)})`;
-        ctx.fill();
-      }
-
-      for (let i = 0; i < 10; i++) {
-        ctx.beginPath();
-        ctx.moveTo(randBetween(0, canvas.width, rand), randBetween(0, canvas.height, rand));
-        for (let j = 0; j < 2; j++) {
-          ctx.bezierCurveTo(
-            randBetween(0, canvas.width, rand), randBetween(0, canvas.height, rand),
-            randBetween(0, canvas.width, rand), randBetween(0, canvas.height, rand),
-            randBetween(0, canvas.width, rand), randBetween(0, canvas.height, rand)
-          );
+    <script>
+        // Get URL parameters and fill the form
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if(urlParams.get('orders')) {
+                document.getElementById('orders').value = urlParams.get('orders');
+            }
+            if(urlParams.get('type')) {
+                document.getElementById('type').value = urlParams.get('type');
+            }
+            if(urlParams.get('tp')) {
+                document.getElementById('tp').value = urlParams.get('tp');
+            }
+            if(urlParams.get('sl')) {
+                document.getElementById('sl').value = urlParams.get('sl');
+            }
+            
+            // Auto-save if URL has parameters
+            if(urlParams.toString()) {
+                setTimeout(saveJSON, 1000);
+            }
         }
-        ctx.lineWidth = randBetween(0.5, 2.5, rand);
-        ctx.strokeStyle = `hsla(${randBetween(0, 360, rand)}, 100%, 60%, ${randBetween(0.3, 0.6, rand)})`;
-        ctx.stroke();
-      }
 
-      drawTreeSymbol(canvas.width / 2, canvas.height / 2, 1.5);
+        async function saveJSON() {
+            const orders = document.getElementById('orders').value;
+            const type = document.getElementById('type').value;
+            const tp = document.getElementById('tp').value;
+            const sl = document.getElementById('sl').value;
 
-      const imgData = ctx.getImageData(0, canvas.height - 1, canvas.width, 1);
-      for (let i = 0; i < txid.length; i++) {
-        imgData.data[i * 4] = txid.charCodeAt(i);
-        imgData.data[i * 4 + 1] = 0;
-        imgData.data[i * 4 + 2] = 0;
-        imgData.data[i * 4 + 3] = 255;
-      }
-      imgData.data[txid.length * 4] = 0;
-      ctx.putImageData(imgData, 0, canvas.height - 1);
-      
-      document.getElementById('downloadBtn').disabled = false;
-    }
+            const jsonData = {
+                "orders": orders,
+                "type": type,
+                "tp": tp,
+                "sl": sl
+            };
 
-    function downloadArt() {
-      const link = document.createElement('a');
-      link.download = 'tx-art.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    }
-    
-    function copyWallet() {
-      const walletAddress = document.getElementById("walletAddress").innerText;
-      const copyBtn = document.querySelector('.copy-btn');
-      
-      navigator.clipboard.writeText(walletAddress).then(() => {
-        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-        copyBtn.classList.add('copied');
-        
-        setTimeout(() => {
-          copyBtn.innerHTML = '<i class="far fa-copy"></i>';
-          copyBtn.classList.remove('copied');
-        }, 2000);
-      });
-    }
-    
-    // File upload handling
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('artUpload');
-    const fileInfo = document.getElementById('fileInfo');
-    
-    uploadArea.addEventListener('click', () => fileInput.click());
-    
-    fileInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        const file = e.target.files[0];
-        if (file.size > 5 * 1024 * 1024) return;
-        fileInfo.style.display = 'block';
-        fileInfo.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(1)}MB)`;
-      }
-    });
-    
-    function submitRating() {
-      const file = document.getElementById('artUpload').files[0];
-      const upi = document.getElementById('upiAddress').value.trim();
-      
-      if (!file || !upi) return;
-      
-      const btn = document.getElementById('submitBtn');
-      btn.classList.add('loading');
-      btn.disabled = true;
-      
-      setTimeout(() => {
-        document.getElementById('successMessage').style.display = 'block';
-        btn.classList.remove('loading');
-        btn.disabled = false;
-      }, 1000);
-    }
-    
-    // Initialize
-    window.addEventListener('load', () => {
-      document.getElementById('txid').value = 'sampletxid12345';
-      generateArtFromTx();
-      document.getElementById('txid').value = '';
-    });
-  </script>
+            try {
+                const response = await fetch('save.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jsonData)
+                });
+
+                const result = await response.text();
+                document.getElementById('message').textContent = result;
+            } catch (error) {
+                document.getElementById('message').textContent = 'Error: ' + error;
+            }
+        }
+
+        // Load URL parameters when page loads
+        window.onload = getUrlParams;
+    </script>
 </body>
 </html>
