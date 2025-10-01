@@ -31,29 +31,6 @@
     <p id="message"></p>
 
     <script>
-        // Get URL parameters and fill the form
-        function getUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            if(urlParams.get('orders')) {
-                document.getElementById('orders').value = urlParams.get('orders');
-            }
-            if(urlParams.get('type')) {
-                document.getElementById('type').value = urlParams.get('type');
-            }
-            if(urlParams.get('tp')) {
-                document.getElementById('tp').value = urlParams.get('tp');
-            }
-            if(urlParams.get('sl')) {
-                document.getElementById('sl').value = urlParams.get('sl');
-            }
-            
-            // Auto-save if URL has parameters
-            if(urlParams.toString()) {
-                setTimeout(saveJSON, 1000);
-            }
-        }
-
         async function saveJSON() {
             const orders = document.getElementById('orders').value;
             const type = document.getElementById('type').value;
@@ -68,12 +45,14 @@
             };
 
             try {
+                // Use FormData instead of JSON to avoid CORS issues
+                const formData = new FormData();
+                formData.append('data', JSON.stringify(jsonData));
+                formData.append('filename', 'data.json');
+
                 const response = await fetch('save.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(jsonData)
+                    body: formData
                 });
 
                 const result = await response.text();
@@ -82,9 +61,6 @@
                 document.getElementById('message').textContent = 'Error: ' + error;
             }
         }
-
-        // Load URL parameters when page loads
-        window.onload = getUrlParams;
     </script>
 </body>
 </html>
