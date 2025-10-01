@@ -31,35 +31,23 @@
     <p id="message"></p>
 
     <script>
-        async function saveJSON() {
+        function saveJSON() {
             const orders = document.getElementById('orders').value;
             const type = document.getElementById('type').value;
             const tp = document.getElementById('tp').value;
             const sl = document.getElementById('sl').value;
 
-            const jsonData = {
-                "orders": orders,
-                "type": type,
-                "tp": tp,
-                "sl": sl
-            };
-
-            try {
-                // Use FormData instead of JSON to avoid CORS issues
-                const formData = new FormData();
-                formData.append('data', JSON.stringify(jsonData));
-                formData.append('filename', 'data.json');
-
-                const response = await fetch('save.php', {
-                    method: 'POST',
-                    body: formData
+            // Create URL with parameters
+            const url = `save.php?orders=${encodeURIComponent(orders)}&type=${encodeURIComponent(type)}&tp=${encodeURIComponent(tp)}&sl=${encodeURIComponent(sl)}`;
+            
+            fetch(url)
+                .then(response => response.text())
+                .then(result => {
+                    document.getElementById('message').textContent = result;
+                })
+                .catch(error => {
+                    document.getElementById('message').textContent = 'Error: ' + error;
                 });
-
-                const result = await response.text();
-                document.getElementById('message').textContent = result;
-            } catch (error) {
-                document.getElementById('message').textContent = 'Error: ' + error;
-            }
         }
     </script>
 </body>
